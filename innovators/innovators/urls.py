@@ -25,9 +25,10 @@ from contact.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="cover"),
-    path('contact', contact, name="contactcover"),
-    path('blog', blog, name="blogcover"),
-    path('innovators', impactful_innovators, name="innovatorscover"),
-    path('search', search, name="searchcover"),
+    path('contact', contactme, name="contact"),
+    path('blog', blog, name="blog"),
+    path('innovators', impactful_innovators, name="innovators"),
+    path('search', search, name="search"),
+    path('sent', sent, name="sent")
     # path('', views.index, name="cover"),
 ]
