@@ -32,6 +32,10 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'coverpage',
+    'blog',
+    'contact',
+    'impactful_innovators',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
