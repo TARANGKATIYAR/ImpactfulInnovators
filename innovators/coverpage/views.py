@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 from lxml import etree
 
-openai.api_key = "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"
+openai.api_key = "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"
 context = {"name": "",
     "profession": "",
     "description": "", 
