@@ -110,21 +110,21 @@
       <div class="u-clearfix u-gutter-0 u-layout-wrap u-layout-wrap-1">
         <div class="u-gutter-0 u-layout">
           <div class="u-layout-row">
-            <div class="u-container-style u-image u-layout-cell u-size-30 u-image-1" data-image-width="1100" data-image-height="1134">
+            {% autoescape off %}
+            <div style='background-image: url("{{img}}"); min-height: 704px; background-position: 50% 50%; ' class="u-container-style u-image u-layout-cell u-size-30 u-image-1" data-image-width="1100" data-image-height="1134">
+              {% endautoescape %}
               <div class="u-container-layout u-valign-bottom u-container-layout-1"></div>
             </div>
             <div class="u-align-left u-container-style u-layout-cell u-shape-rectangle u-size-30 u-white u-layout-cell-2">
               <div class="u-container-layout u-container-layout-2">
-                <h1 class="u-custom-font u-font-oswald u-text u-text-default u-text-1">{Name}</h1>
-                <h6 class="u-custom-font u-font-pt-sans u-text u-text-default u-text-palette-3-base u-text-2">{Profession}</h6>
-                <p class="u-text u-text-grey-50 u-text-3">{Description}</p>
-                <p class="u-text u-text-4"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-1"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/397992-b6387c3b.png" alt=""></span>&nbsp;​Inventions: {Inventions}
+                <h1 class="u-custom-font u-font-oswald u-text u-text-default u-text-1">{{name}}</h1>
+                <h6 class="u-custom-font u-font-pt-sans u-text u-text-default u-text-palette-3-base u-text-2">{{profession}}</h6>
+                <p class="u-text u-text-grey-50 u-text-3">{{description}}</p>
+                <p class="u-text u-text-4"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-1"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/397992-b6387c3b.png" alt=""></span>&nbsp;{{inventions}}
                 </p>
-                <p class="u-text u-text-5"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-2"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/2336316-b2c3b8a4.png" alt=""></span>&nbsp;Birth: {Birth}
+                <p class="u-text u-text-5"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-2"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/2336316-b2c3b8a4.png" alt=""></span>&nbsp;{{birth_and_death}}
                 </p>
-                <p class="u-text u-text-6"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-3"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/4771946-bb69037e.png" alt=""></span>&nbsp;Death: {Death}
-                </p>
-                <p class="u-text u-text-7"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-4"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/157933-63251822.png" alt=""></span>&nbsp;Info: {Information}
+                <p class="u-text u-text-7"><span class="u-file-icon u-icon u-text-palette-3-base u-icon-4"><img src="https://raw.githubusercontent.com/Yash-Programmer/ImpactfulInnovators/master/innovators/static/images/157933-63251822.png" alt=""></span>&nbsp;{{information}}
                 </p>
               </div>
             </div>
@@ -136,16 +136,6 @@
     
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-06a7"><div class="u-clearfix u-sheet u-sheet-1"></div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/website-design" target="_blank">
-        <span>Best Website Design</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.app" target="_blank">
-        <span>Website Builder</span>
-      </a>. 
-    </section>
+    
   
 </body></html>
