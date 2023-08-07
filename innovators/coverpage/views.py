@@ -22,25 +22,26 @@ def search(request):
     innovator = request.GET.get("search", "None")
     name = innovator.split()
     print(name)
-    for word in name:
-        word[0] = word[0].upper()
+    # for word in name:
+    #     word[0] = word[0].upper()
         
 
-    # if innovator == "None":
-    #     return render(request, 'profile.html')
-    # chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[
-    #     {"role": "user", "content": f"Write the full name of {innovator}"},
-    #     {"role": "user", "content": f"Write the profession of {innovator} in one line"},
-    #     {"role": "user", "content": f"Write the description of {innovator} in one line"},
-    #     {"role": "user", "content": f"Write the inventions of {innovator} in one line"},
-    #     {"role": "user", "content": f"Write the birth of {innovator} in one line"},
-    #     {"role": "user", "content": f"Write the death of {innovator} or is he alive in one line"},
-    #     {"role": "user", "content": f"Write about {innovator} in 3 para"},])
-    # reply = chat.choices[0].message.content
-    # replyList = reply.split("\n\n")
-    # replyList.insert(0, innovator)
+    if innovator == "None":
+        return render(request, 'profile.html')
+    else:
+        chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[
+            {"role": "user", "content": f"Write the full name of {innovator}"},
+            {"role": "user", "content": f"Write the profession of {innovator} in one line"},
+            {"role": "user", "content": f"Write the description of {innovator} in one line"},
+            {"role": "user", "content": f"Write the inventions of {innovator} in one line"},
+            {"role": "user", "content": f"Write the birth of {innovator} in one line"},
+            {"role": "user", "content": f"Write the death of {innovator} or is he alive in one line"},
+            {"role": "user", "content": f"Write about {innovator} in 3 para"},])
+        reply = chat.choices[0].message.content
+        replyList = reply.split("\n\n")
+        replyList.insert(0, innovator)
 
-    # print(replyList)
+        print(replyList)
 #     headers = {
 #     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0"
 # }
