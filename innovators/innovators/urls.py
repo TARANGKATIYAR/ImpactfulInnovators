@@ -29,6 +29,7 @@ urlpatterns = [
     path('blog', blog, name="blog"),
     path('innovators', impactful_innovators, name="innovators"),
     path('search', search, name="search"),
-    path('sent', sent, name="sent")
-    # path('', views.index, name="cover"),
+    path('personality_search', search_page, name="searchpage"),
+    path('chatbot', chatbot, name="chatbot"),
+    path('sent', sent, name="sent"),
 ]

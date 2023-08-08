@@ -6,7 +6,7 @@ import requests
 from lxml import etree, html
 from urllib.parse import quote
 
-openai.api_key = "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"
+openai.api_key = "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"
 context = {"name": "",
     "profession": "",
     "description": "", 
@@ -36,10 +36,6 @@ def search(request):
     else:
         messages = [
             {"role": "user", "content": f"Write the profession of {innovator} in one line. Write the description of {innovator} in one line. Write the inventions of {innovator} in one line. Write the birth and death of {innovator} in one line. Write about {innovator} in 10 lines"},
-            # {"role": "user", "content": f"Write the description of {innovator} in one line"},
-            # {"role": "user", "content": f""},
-            # {"role": "user", "content": f""},
-            # {"role": "user", "content": f"Write about {innovator}"},
         ]
 
         chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
@@ -78,3 +74,21 @@ def search(request):
         # print(escaped_link)
         
     return render(request, 'profile.html', context)
+
+def search_page(request):
+    return render(request, 'chatbot.html', context)
+
+def chatbot(request):
+    if request.method == "POST":
+        question = request.POST.get("question", "None")
+        print(question)
+        question_ = [
+            {"role": "user", "content": question},
+        ]
+        chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=question_)
+        reply = chat.choices[0].message.content
+        context = {
+            "question": question,
+            "answer": reply,
+        }
+    return render(request, "Chatbot-2.html", context)
