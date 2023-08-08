@@ -6,7 +6,7 @@ import requests
 from lxml import etree, html
 from urllib.parse import quote
 
-openai.api_key = "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"
+openai.api_key = "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"
 context = {"name": "",
     "profession": "",
     "description": "", 
@@ -79,6 +79,7 @@ def search_page(request):
     return render(request, 'chatbot.html', context)
 
 def chatbot(request):
+    context = {}
     if request.method == "POST":
         question = request.POST.get("question", "None")
         print(question)
@@ -87,6 +88,7 @@ def chatbot(request):
         ]
         chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=question_)
         reply = chat.choices[0].message.content
+        print(reply)
         context = {
             "question": question,
             "answer": reply,
