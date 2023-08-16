@@ -66,7 +66,7 @@ def search_about(request):
             {"role": "user", "content": f"Write the profession of {innovator} in one line. Write the description of {innovator} in one line. Write the inventions of {innovator} in one line. Write the birth and death of {innovator} in one line. "},
         ]
         prompts = [
-            {"prompt": f"Write about {innovator} in 1000 words and different paras", "max_tokens": 3000},
+            {"prompt": f"Write about {innovator} in different paras", "max_tokens": 3000},
             
         ]        
         
@@ -110,76 +110,82 @@ def search_about(request):
         
         # Page 2
         openai.api_key = key5
-        while True:
-            try:
-                prompts = [
-                    {"prompt": f"Write the family of {innovator} in python list like so: - [('mother_name', '50 words description'),('father_name', '50 ords description'),('sibling_name, 50 words description')]", "max_tokens": 3000},
+        prompts = [
+                    {"prompt": f"Write the family of {innovator} in python list like so: - [('mother_name', '50 words description'),('father_name', '50 words description'),('sibling_name, 50 words description')]", "max_tokens": 3000},
                     {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
                 ]        
                 
-                responses = []
+        responses = []
 
-                for prompt in prompts:
-                    response = openai.Completion.create(
-                        engine="text-davinci-003",
-                        prompt=prompt["prompt"],
-                        max_tokens=prompt["max_tokens"],
-                        stop=None
-                    )
-                    responses.append(response.choices[0].text.strip())
+        for prompt in prompts:
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt["prompt"],
+                max_tokens=prompt["max_tokens"],
+                stop=None
+            )
+            responses.append(response.choices[0].text.strip())
                 
-                data_string = responses[0]
-                mylist = eval(data_string)
-                context["mother_name"] = mylist[0][0]
-                context["father_name"] = mylist[1][0]
-                context["sibling_name"] = mylist[2][0]
-                context["mother_desc"] = mylist[0][1]
-                context["father_desc"] = mylist[1][1]
-                context["sibling_desc"] = mylist[2][1]
-                context["mother_img"]  = img(context["mother_name"])
-                context["father_img"]  = img(context["father_name"])
-                context["sibling_img"]  = img(context["sibling_name"])
-                print(context)
-                break
-            except SyntaxError as e:
-                openai.api_key = key5
-                print(e)
+        data_string = responses[0]
+        # Remove the outer square brackets and then split the string by '), (' to separate the tuples
+        tuple_strings = data_string[1:-1].split("'), ('")
+
+        # Create a list of tuples from the separated tuple strings
+        mylist = [tuple_string.split("','") for tuple_string in tuple_strings]
+        print(type(mylist))
+        print(mylist[0][0][0])
+        # print(data_string)
+        # mylist = eval(data_string)
+        # context["mother_name"] = mylist[0][0]
+        # context["father_name"] = mylist[1][0]
+        # context["sibling_name"] = mylist[2][0]
+        # context["mother_desc"] = mylist[0][1]
+        # context["father_desc"] = mylist[1][1]
+        # context["sibling_desc"] = mylist[2][1]
+        # context["mother_img"]  = img(context["mother_name"])
+        # context["father_img"]  = img(context["father_name"])
+        # context["sibling_img"]  = img(context["sibling_name"])
+        print(context)
         
         # Page 3
         openai.api_key = key4
-        while True:
-            try:
-                prompts = [
+        if openai.api_key == key4:
+            print(True)
+        # while True:
+        #     try:
+        prompts = [
                     {"prompt": f"Write 3 inventions of {innovator} in python list like so: - [('invention', '50 words description'),('invention', '50 words description'),('invention, 50 words description')]", "max_tokens": 3000},
                     {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
-                ]        
+        ]        
                 
-                responses = []
+        responses = []
 
-                for prompt in prompts:
-                    response = openai.Completion.create(
-                        engine="text-davinci-003",
-                        prompt=prompt["prompt"],
-                        max_tokens=prompt["max_tokens"],
-                        stop=None
-                    )
-                    responses.append(response.choices[0].text.strip())
+        for prompt in prompts:
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt["prompt"],
+                max_tokens=prompt["max_tokens"],
+                stop=None
+            )
+            responses.append(response.choices[0].text.strip())
                 
-                data_string = responses[0]
-                mylist = eval(data_string)
-                context["invention1_name"] = mylist[0][0]
-                context["invention2_name"] = mylist[1][0]
-                context["invention3_name"] = mylist[2][0]
-                context["invention1_desc"] = mylist[0][1]
-                context["invention1_desc"] = mylist[1][1]
-                context["invention1_desc"] = mylist[2][1]
-                context["invention1_img"]  = img(context["invention1_name"])
-                context["invention2_img"]  = img(context["invention2_name"])
-                context["invention3_img"]  = img(context["invention3_name"])
-                break
-            except SyntaxError as e:
-                openai.api_key = key3
-                print(e)
+        data_string = responses[0]
+        mylist = eval(data_string)
+        context["invention1_name"] = mylist[0][0]
+        context["invention2_name"] = mylist[1][0]
+        context["invention3_name"] = mylist[2][0]
+        context["invention1_desc"] = mylist[0][1]
+        context["invention1_desc"] = mylist[1][1]
+        context["invention1_desc"] = mylist[2][1]
+        context["invention1_img"]  = img(context["invention1_name"])
+        context["invention2_img"]  = img(context["invention2_name"])
+        context["invention3_img"]  = img(context["invention3_name"])
+        print("1 done")
+                # break
+            # except SyntaxError as e:
+            #     openai.api_key = key6
+            #     print("1 done")
+            #     print(e)
         
     return render(request, 'profile.html', context)
 
