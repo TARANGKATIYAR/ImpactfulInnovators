@@ -8,12 +8,12 @@ from lxml import etree, html
 from urllib.parse import quote
 import re
 import ast
-key1 = "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"
-key2 = "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"
-key3 = "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"
-key4 = "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"
-key5 = "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"
-key6 = "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"
+key1 = "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"
+key2 = "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"
+key3 = "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"
+key4 = "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"
+key5 = "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"
+key6 = "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"
 context = {
     "name": "",
     "profession": "",
@@ -73,7 +73,7 @@ def search_about(request):
         ]
         prompts = [
             {"prompt": f"Write about {innovator} in different paras", "max_tokens": 3000},
-            
+            {"prompt": f"Write a quote by {innovator}", "max_tokens": 100},
         ]        
         
         responses = []
@@ -88,6 +88,7 @@ def search_about(request):
             responses.append(response.choices[0].text.strip())
 
         context["information"] = responses[0]
+        context["quote"] = responses[1]
             
         
 
@@ -189,13 +190,15 @@ def search_about(request):
         context["invention1_img"]  = img(context["invention1_name"])
         context["invention2_img"]  = img(context["invention2_name"])
         context["invention3_img"]  = img(context["invention3_name"])
-        print("1 done")
+        context["img2"] = img(innovator + "pic")
+        context["img3"] = img(innovator + "picture")
+
                 # break
             # except SyntaxError as e:
             #     openai.api_key = key6
             #     print("1 done")
             #     print(e)
-        
+    print(context)        
     return render(request, 'profile.html', context)
 
 def search_page(request):
