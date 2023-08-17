@@ -221,7 +221,7 @@
             <div class="u-layout-row">
               <div class="u-align-center u-container-style u-layout-cell u-shape-rectangle u-size-27-lg u-size-27-xl u-size-60-md u-size-60-sm u-size-60-xs u-layout-cell-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
                 <div class="u-container-layout u-container-layout-1">
-                  <div class="u-border-9 u-border-palette-2-base u-image u-image-circle u-preserve-proportions u-image-1" style="background-image: url('{{ img2 }}');" alt="" data-image-width="816" data-image-height="816"></div>
+                  <div class="u-border-9 u-border-palette-2-base u-image u-image-circle u-preserve-proportions u-image-1" style="background-image: url('{{ img }}');" alt="" data-image-width="816" data-image-height="816"></div>
                   <h3 class="u-text u-text-3" spellcheck="false">Education</h3>
                 </div>
               </div>
@@ -301,25 +301,13 @@
           </div>
         </div>
         <div class="u-expanded-width-sm u-expanded-width-xs u-list u-list-1">
-          <div class="u-repeater u-repeater-1">
-            <div class="u-align-center u-container-style u-list-item u-radius-15 u-repeater-item u-shape-round u-white u-list-item-1">
-              <div class="u-container-layout u-similar-container u-container-layout-2">
-                <p class="u-text u-text-palette-1-base u-text-7">awards won</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-palette-2-base u-text-8" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">17</h3>
-              </div>
-            </div>
-            <div class="u-align-center u-container-style u-list-item u-radius-15 u-repeater-item u-shape-round u-white u-list-item-2">
-              <div class="u-container-layout u-similar-container u-container-layout-3">
-                <p class="u-text u-text-palette-1-base u-text-9"> experience</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-palette-2-base u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">12+</h3>
-              </div>
-            </div>
-          </div>
-        </div>
+          
         <div class="u-align-center u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-2">
           <div class="u-container-layout u-container-layout-4">
+            {% autoescape off %}
             <h2 class="u-align-center u-custom-font u-font-open-sans u-text u-text-default-lg u-text-default-xl u-text-palette-2-base u-text-11" spellcheck="false">Awards and Recognistions</h2>
-            <p class="u-custom-font u-text u-text-default u-text-12">Etiam erat velit scelerisque in dictum non consectetur. Nisl purus in mollis nunc sed id semper. Cras fermentum odio eu feugiat pretium nibh ipsum. Tristique senectus et netus et malesuada fames. Sem fringilla ut morbi tincidunt augue interdum velit. Nunc sed blandit libero volutpat sed cras. Risus quis varius quam quisque id. Semper auctor neque vitae tempus quam pellentesque nec nam aliquam. </p>
+            <div class="u-custom-font u-text u-text-default u-text-12" style="text-align: justify;" >{{ award|linebreaksbr }}</div>
+            {% endautoescape %}
           </div>
         </div>
       </div>
@@ -328,18 +316,8 @@
     
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-31ca"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the Text Element.</p>
+        <p class="u-small-text u-text u-text-variant u-text-1">Thank You. Made with ❤️ in India</p>
       </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/landing-page" target="_blank">
-        <span>Landing Page</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.com/website-builder" target="_blank">
-        <span>Best Website Builder</span>
-      </a>. 
-    </section>
+    
   
 </body></html>

@@ -8,7 +8,7 @@ from lxml import etree, html
 from urllib.parse import quote
 import re
 import ast
-key1 = "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"
+key1 = "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"
 key2 = "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"
 key3 = "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"
 key4 = "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"
@@ -72,7 +72,6 @@ def search_about(request):
             {"role": "user", "content": f"Write the profession of {innovator} in one line. Write the description of {innovator} in one line. Write the inventions of {innovator} in one line. Write the birth and death of {innovator} in one line. "},
         ]
         prompts = [
-            {"prompt": f"Write about {innovator} in different paras", "max_tokens": 3000},
             {"prompt": f"Write a quote by {innovator}", "max_tokens": 100},
             {"prompt": f'''Write about the college and school education of {innovator} in python list like so: - [("school_name", "100 words description"),("college_names", "100 words description")]''', "max_tokens": 3000},
             
@@ -88,10 +87,12 @@ def search_about(request):
                 stop=None
             )
             responses.append(response.choices[0].text.strip())
-
-        context["information"] = responses[0]
-        context["quote"] = responses[1]
-        education = eval(responses[2])
+        context["quote"] = responses[0]
+        try:
+            education = eval(responses[1])
+        except SyntaxError as e:
+            print(e)
+            education = ast.literal_eval(responses[1])
         context["school_name"] = education[0][0]
         context["school_desc"] = education[0][1]
         context["college_name"] = education[1][0]
@@ -137,6 +138,7 @@ def search_about(request):
                 max_tokens=prompt["max_tokens"],
                 stop=None
             )
+            time.sleep(20)
             responses.append(response.choices[0].text.strip())
         
         context["information"] = responses[1]
@@ -166,9 +168,9 @@ def search_about(request):
         # while True:
         #     try:
         prompts = [
-                    {"prompt": f'''Write 3 big inventions of {innovator} in python list like so: - [("invention", "50 words description"),("invention', "50 words description"),("invention, 50 words description")]''', "max_tokens": 3000},
+                    {"prompt": f'''Write 3 big inventions of {innovator} in python list like so: - [("invention", "50 words description"),("invention', "50 words description"),("invention, 50 words description")]''', "max_tokens": 1500},
                     {"prompt": f"Write the dob of {innovator} in dd\\mm\\yyyy", "max_tokens": 10},
-                    {"prompt": f'''Write award of {innovator} in python list like so: - [("number of awards)", "10 words description"),("years of experience", "10 words description")]''', "max_tokens": 10},
+                    {"prompt": f'''write about all awards and recognision of {innovator} in pointers interactively and use emojis also''', "max_tokens": 2500},
                     
         ]        
                 
@@ -184,17 +186,24 @@ def search_about(request):
             print("done")
             responses.append(response.choices[0].text.strip())
             time.sleep(20)
-
-        context["dob"] = responses[1]
-        print(responses[2])
-        mynums = eval(responses[2])
-        context["number_of_award"] = eval(responses[2])[0][0]
-        context["years_of_experience"] = eval(responses[2])[1][0]
         
+        pattern = r"\b\d{2}/\d{2}/\d{4}\b"
+        dob_matches = re.findall(pattern, responses[1])
+        if dob_matches:
+            dob = dob_matches[0]
+            context["dob"] = dob
+        else:
+            context["dob"] = responses[1]
+        print(responses[2])
+        # mynums = ast.literal_eval(responses[2])
+        context["award"] = responses[2]
 
         data_string = responses[0]
         print(data_string)
-        mylist = eval(data_string)
+        try:
+            mylist = eval(data_string)
+        except SyntaxError:
+            mylist = ast.literal_eval(data_string)
         print(mylist)
         context["invention1_name"] = mylist[0][0]
         context["invention2_name"] = mylist[1][0]
