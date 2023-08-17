@@ -1,3 +1,4 @@
+import time
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 import openai
@@ -7,7 +8,12 @@ from lxml import etree, html
 from urllib.parse import quote
 import re
 import ast
-
+key1 = "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"
+key2 = "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"
+key3 = "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"
+key4 = "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"
+key5 = "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"
+key6 = "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"
 context = {
     "name": "",
     "profession": "",
@@ -116,7 +122,7 @@ def search_about(request):
                 ]        
                 
         responses = []
-
+        time.sleep(20)
         for prompt in prompts:
             response = openai.Completion.create(
                 engine="text-davinci-003",
@@ -151,11 +157,12 @@ def search_about(request):
         openai.api_key = key4
         if openai.api_key == key4:
             print(True)
+        time.sleep(20)
         # while True:
         #     try:
         prompts = [
                     {"prompt": f"Write 3 inventions of {innovator} in python list like so: - [('invention', '50 words description'),('invention', '50 words description'),('invention, 50 words description')]", "max_tokens": 3000},
-                    {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
+                    # {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
         ]        
                 
         responses = []
@@ -167,9 +174,11 @@ def search_about(request):
                 max_tokens=prompt["max_tokens"],
                 stop=None
             )
+            print("done")
             responses.append(response.choices[0].text.strip())
                 
         data_string = responses[0]
+        print(data_string)
         mylist = eval(data_string)
         context["invention1_name"] = mylist[0][0]
         context["invention2_name"] = mylist[1][0]
