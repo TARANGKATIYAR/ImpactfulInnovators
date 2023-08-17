@@ -8,12 +8,12 @@ from lxml import etree, html
 from urllib.parse import quote
 import re
 import ast
-key1 = "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"
-key2 = "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"
-key3 = "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"
-key4 = "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"
-key5 = "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"
-key6 = "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"
+key1 = "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"
+key2 = "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"
+key3 = "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"
+key4 = "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"
+key5 = "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"
+key6 = "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"
 context = {
     "name": "",
     "profession": "",
@@ -74,6 +74,8 @@ def search_about(request):
         prompts = [
             {"prompt": f"Write about {innovator} in different paras", "max_tokens": 3000},
             {"prompt": f"Write a quote by {innovator}", "max_tokens": 100},
+            {"prompt": f'''Write about the college and school education of {innovator} in python list like so: - [("school_name", "100 words description"),("college_names", "100 words description")]''', "max_tokens": 3000},
+            
         ]        
         
         responses = []
@@ -89,6 +91,11 @@ def search_about(request):
 
         context["information"] = responses[0]
         context["quote"] = responses[1]
+        education = eval(responses[2])
+        context["school_name"] = education[0][0]
+        context["school_desc"] = education[0][1]
+        context["college_name"] = education[1][0]
+        context["college_desc"] = education[1][1]
             
         
 
@@ -116,9 +123,8 @@ def search_about(request):
         context["img"] = img(innovator)
         
         # Page 2
-        openai.api_key = key5
         prompts = [
-                    {"prompt": f"Write the family of {innovator} in python list like so: - [('mother_name', '50 words description'),('father_name', '50 words description'),('sibling_name, 50 words description')]", "max_tokens": 3000},
+                    {"prompt": f'''Write the family of {innovator} in python list like so: - [("mother_name", "50 words description"),("father_name", "50 words description"),("sibling_name", "50 words description")]''', "max_tokens": 3000},
                     {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
                 ]        
                 
@@ -132,7 +138,8 @@ def search_about(request):
                 stop=None
             )
             responses.append(response.choices[0].text.strip())
-                
+        
+        context["information"] = responses[1]
         data_string = responses[0]
         # Remove the outer square brackets and then split the string by '), (' to separate the tuples
         tuple_strings = data_string[1:-1].split("'), ('")
@@ -141,29 +148,28 @@ def search_about(request):
         mylist = [tuple_string.split("','") for tuple_string in tuple_strings]
         print(type(mylist))
         print(mylist[0][0][0])
-        # print(data_string)
-        # mylist = eval(data_string)
-        # context["mother_name"] = mylist[0][0]
-        # context["father_name"] = mylist[1][0]
-        # context["sibling_name"] = mylist[2][0]
-        # context["mother_desc"] = mylist[0][1]
-        # context["father_desc"] = mylist[1][1]
-        # context["sibling_desc"] = mylist[2][1]
-        # context["mother_img"]  = img(context["mother_name"])
-        # context["father_img"]  = img(context["father_name"])
-        # context["sibling_img"]  = img(context["sibling_name"])
+        print(data_string)
+        mylist = eval(data_string)
+        context["mother_name"] = mylist[0][0]
+        context["father_name"] = mylist[1][0]
+        context["sibling_name"] = mylist[2][0]
+        context["mother_desc"] = mylist[0][1]
+        context["father_desc"] = mylist[1][1]
+        context["sibling_desc"] = mylist[2][1]
+        context["mother_img"]  = img(context["mother_name"])
+        context["father_img"]  = img(context["father_name"])
+        context["sibling_img"]  = img(context["sibling_name"])
         print(context)
         
         # Page 3
-        openai.api_key = key4
-        if openai.api_key == key4:
-            print(True)
         time.sleep(20)
         # while True:
         #     try:
         prompts = [
-                    {"prompt": f"Write 3 inventions of {innovator} in python list like so: - [('invention', '50 words description'),('invention', '50 words description'),('invention, 50 words description')]", "max_tokens": 3000},
-                    # {"prompt": f"Write about the inventions and personality of {innovator} in 100 words", "max_tokens": 3000},
+                    {"prompt": f'''Write 3 big inventions of {innovator} in python list like so: - [("invention", "50 words description"),("invention', "50 words description"),("invention, 50 words description")]''', "max_tokens": 3000},
+                    {"prompt": f"Write the dob of {innovator} in dd\\mm\\yyyy", "max_tokens": 10},
+                    {"prompt": f'''Write award of {innovator} in python list like so: - [("number of awards)", "10 words description"),("years of experience", "10 words description")]''', "max_tokens": 10},
+                    
         ]        
                 
         responses = []
@@ -177,20 +183,28 @@ def search_about(request):
             )
             print("done")
             responses.append(response.choices[0].text.strip())
-                
+            time.sleep(20)
+
+        context["dob"] = responses[1]
+        print(responses[2])
+        mynums = eval(responses[2])
+        context["number_of_award"] = eval(responses[2])[0][0]
+        context["years_of_experience"] = eval(responses[2])[1][0]
+        
+
         data_string = responses[0]
         print(data_string)
         mylist = eval(data_string)
+        print(mylist)
         context["invention1_name"] = mylist[0][0]
         context["invention2_name"] = mylist[1][0]
         context["invention3_name"] = mylist[2][0]
         context["invention1_desc"] = mylist[0][1]
-        context["invention1_desc"] = mylist[1][1]
-        context["invention1_desc"] = mylist[2][1]
+        context["invention2_desc"] = mylist[1][1]
+        context["invention3_desc"] = mylist[2][1]
         context["invention1_img"]  = img(context["invention1_name"])
         context["invention2_img"]  = img(context["invention2_name"])
         context["invention3_img"]  = img(context["invention3_name"])
-        context["img2"] = img(innovator + "pic")
         context["img3"] = img(innovator + "picture")
 
                 # break
