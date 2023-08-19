@@ -8,12 +8,8 @@ from lxml import etree, html
 from urllib.parse import quote
 import re
 import ast
-key1 = "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"
-key2 = "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"
-key3 = "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"
-key4 = "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"
-key5 = "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"
-key6 = "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"
+key1 = "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"
+key2 = "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"
 context = {
     "name": "",
     "profession": "",
@@ -151,16 +147,16 @@ def search_about(request):
         print(type(mylist))
         print(mylist[0][0][0])
         print(data_string)
-        mylist = eval(data_string)
+        try:
+            mylist = eval(data_string)
+        except SyntaxError:
+            mylist = ast.literal_eval(data_string)
         context["mother_name"] = mylist[0][0]
         context["father_name"] = mylist[1][0]
         context["sibling_name"] = mylist[2][0]
         context["mother_desc"] = mylist[0][1]
         context["father_desc"] = mylist[1][1]
         context["sibling_desc"] = mylist[2][1]
-        context["mother_img"]  = img(context["mother_name"])
-        context["father_img"]  = img(context["father_name"])
-        context["sibling_img"]  = img(context["sibling_name"])
         print(context)
         
         # Page 3
@@ -228,7 +224,7 @@ def search_page(request):
     return render(request, 'chatbot.html', context)
 
 def chatbot(request):
-    openai.api_key = key1
+    openai.api_key = key2
     context = {}
     if request.method == "POST":
         question = request.POST.get("question", "None")
